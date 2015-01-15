@@ -55,7 +55,7 @@ angular.module('ngS3upload.config', []).
     };
 
 
-    this.upload = function (scope, uri, key, acl, type, accessKey, policy, signature, file) {
+    this.upload = function (scope, uri, key, acl, type, accessKey, policy, signature, file, headers) {
       var deferred = $q.defer();
       scope.attempt = true;
 
@@ -132,6 +132,13 @@ angular.module('ngS3upload.config', []).
       scope.uploading = true;
       this.uploads++;
       xhr.open('POST', uri, true);
+
+      if (headers) {
+        for (var k in headers) {
+          xhr.setRequestHeader(k, headers[k]);
+        }
+      }
+
       xhr.send(fd);
 
       return deferred.promise;
@@ -213,7 +220,8 @@ angular.module('ngS3upload.directives', []).
                     s3Options.key,
                     s3Options.policy,
                     s3Options.signature,
-                    selectedFile
+                    selectedFile,
+                    opts.headers
                   ).then(function () {
                     ngModel.$setViewValue(s3Uri + key);
                     scope.filename = ngModel.$viewValue;

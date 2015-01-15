@@ -70,7 +70,8 @@ angular.module('ngS3upload.directives', []).
                     s3Options.key,
                     s3Options.policy,
                     s3Options.signature,
-                    selectedFile
+                    selectedFile,
+                    opts.headers
                   ).then(function () {
                     ngModel.$setViewValue(s3Uri + key);
                     scope.filename = ngModel.$viewValue;
