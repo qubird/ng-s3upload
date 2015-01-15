@@ -37,6 +37,12 @@ angular.module('ngS3upload.services', []).
       fd.append('signature', signature);
       fd.append("file", file);
 
+      if (headers) {
+        for (var k in headers) {
+          fd.append('x-amz-meta-' + k, headers[k]);
+        }
+      }
+
       var xhr = new XMLHttpRequest();
       xhr.upload.addEventListener("progress", uploadProgress, false);
       xhr.addEventListener("load", uploadComplete, false);
@@ -101,13 +107,6 @@ angular.module('ngS3upload.services', []).
       scope.uploading = true;
       this.uploads++;
       xhr.open('POST', uri, true);
-
-      if (headers) {
-        for (var k in headers) {
-          xhr.setRequestHeader('x-amz-meta-' + k, headers[k]);
-        }
-      }
-
       xhr.send(fd);
 
       return deferred.promise;
