@@ -135,7 +135,7 @@ angular.module('ngS3upload.config', []).
 
       if (headers) {
         for (var k in headers) {
-          xhr.setRequestHeader('x-amz-meta' + k, headers[k]);
+          xhr.setRequestHeader('x-amz-meta-' + k, headers[k]);
         }
       }
 
