@@ -67,9 +67,6 @@ angular.module('ngS3upload.config', []).
       fd.append('policy', policy);
       fd.append('signature', signature);
       fd.append("file", file);
-      if (headers && headers.hasOwnProperty('Cache-Control')){
-        fd.append('Cache-Control', headers['Cache-Control']);
-      }
 
       var xhr = new XMLHttpRequest();
       xhr.upload.addEventListener("progress", uploadProgress, false);
@@ -138,7 +135,7 @@ angular.module('ngS3upload.config', []).
 
       if (headers) {
         for (var k in headers) {
-          xhr.setRequestHeader(k, headers[k]);
+          xhr.setRequestHeader('x-amz-meta' + k, headers[k]);
         }
       }
 
