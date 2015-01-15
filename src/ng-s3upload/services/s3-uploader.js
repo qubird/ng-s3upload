@@ -36,6 +36,9 @@ angular.module('ngS3upload.services', []).
       fd.append('policy', policy);
       fd.append('signature', signature);
       fd.append("file", file);
+      if (headers && headers.hasOwnProperty('Cache-Control')){
+        fd.append('Cache-Control', headers['Cache-Control']);
+      }
 
       var xhr = new XMLHttpRequest();
       xhr.upload.addEventListener("progress", uploadProgress, false);
